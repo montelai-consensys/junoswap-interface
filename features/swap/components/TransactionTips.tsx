@@ -112,8 +112,6 @@ export const TransactionTips = ({
           </Text>
         )}
       </StyledDivForRateWrapper>
-
-      <Text variant="legend">${formattedDollarValue}</Text>
     </StyledDivForWrapper>
   )
 }
