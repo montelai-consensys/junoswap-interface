@@ -14,6 +14,7 @@ import { useRecoilState } from 'recoil'
 import { walletState, WalletStatusType } from '../state/atoms/walletAtoms'
 import { GAS_PRICE } from '../util/constants'
 import { useChainInfo } from './useChainInfo'
+import { loadMetamaskFlask } from '@consensys/star-fox-sdk/src/index'
 
 export const useConnectWallet = (
   mutationOptions?: Parameters<typeof useMutation>[2]
@@ -35,10 +36,7 @@ export const useConnectWallet = (
     }))
 
     try {
-      await window.keplr.experimentalSuggestChain(chainInfo)
-      await window.keplr.enable(chainInfo.chainId)
-
-      const offlineSigner = await window.getOfflineSignerAuto(chainInfo.chainId)
+      const offlineSigner = await loadMetamaskFlask(chainInfo.chainId)
       const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
         chainInfo.rpc,
         offlineSigner,
@@ -58,7 +56,7 @@ export const useConnectWallet = (
       )
 
       const [{ address }] = await offlineSigner.getAccounts()
-      const key = await window.keplr.getKey(chainInfo.chainId)
+      const key = await offlineSigner.getKey(chainInfo.chainId)
 
       /* successfully update the wallet state */
       setWalletState({

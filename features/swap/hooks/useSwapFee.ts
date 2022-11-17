@@ -31,7 +31,7 @@ export const useSwapFee = ({ tokenA, tokenB }) => {
   })
 
   // default to NETWORK_FEE constant
-  let swapFee = NETWORK_FEE * 100
+  let swapFee = NETWORK_FEE * 10000
 
   // use fee for direct token swap or inputPool passthrough if set
   if (
@@ -54,7 +54,7 @@ export const useSwapFee = ({ tokenA, tokenB }) => {
 
     // add default network fee if not set in outputPool passhthrough
   } else if (swapInfo2) {
-    swapFee += NETWORK_FEE * 100
+    swapFee += NETWORK_FEE * 10000
   }
 
   return swapFee
